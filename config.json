@@ -1,0 +1,40 @@
+{
+	"extensions":[
+		{	"id": "xiaohongshu",
+			"name": "小红书",
+			"description": "解析小红书内容",
+			"triggerRegex": "https?://xhslink\\.com/[A-Za-z0-9]+",
+			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/xhslink.js",
+			"entryMethod": "xhslink_process",
+			"updateTime": "2023-07-18T20:39:03Z",
+			"versionCode": 1
+		},
+		{	"id": "douyin",
+			"name": "抖音",
+			"description": "解析抖音内容",
+			"triggerRegex": "https?://v.douyin\\.com/[A-Za-z0-9]+",
+			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/dylink.js",
+			"entryMethod": "dylink_process",
+			"updateTime": "2023-07-17T20:39:03Z",
+			"versionCode": 1
+		},
+		{	"id": "kuiashou",
+			"name": "快手",
+			"description": "解析快手内容",
+			"triggerRegex": "https?://v\\.kuaishou\\.com/[A-Za-z0-9]+",
+			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/kuaishou.js",
+			"entryMethod": "kuaishou_process",
+			"updateTime": "2023-07-27T20:39:03Z",
+			"versionCode": 1
+		},
+		{	"id": "weibo",
+			"name": "微博",
+			"description": "解析微博内容",
+			"triggerRegex": "https?://weibo\\.com/[0-9]+/[0-9]+",
+			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/weibolink.js",
+			"entryMethod": "weibo_process",
+			"updateTime": "2023-07-27T20:39:03Z",
+			"versionCode": 1
+		}
+	]
+}
