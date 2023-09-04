@@ -45,10 +45,18 @@ function dylink_process(data){
     }
     console.log("videoUrls: " + videoUrls);
 
+    var cover = '';
+    var coverRegex = /<img[^>]*src="([^"]*)"[^>]*class="poster"/gi;
+    var coverMatch = coverRegex.exec(html);
+    if (coverMatch && coverMatch.length >= 2) {
+      cover = coverMatch[1];
+    }
+
     var result = {
         title: title,
         description: description,
         richText: false,
+        cover: cover,
         imgs: imageUrls,
         videos: videoUrls,
         files: [],
