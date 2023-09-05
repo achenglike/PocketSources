@@ -28,7 +28,7 @@ function weibo_process(data){
     var picsMatch = regexImg.exec(html);
     if (picsMatch && picsMatch.length >= 2) {
         var pics = JSON.parse(picsMatch[1]);
-        imageUrls = wbMediaNode(pics.map((e) => e.large.url));
+        imageUrls = pics.map((e) => wbMediaNode(e.large.url));
     }
 
     // regex take cover
