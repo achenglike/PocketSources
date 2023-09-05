@@ -39,14 +39,14 @@ function xhslink_process(data){
     var match;
 
     while ((match = regexImg.exec(html)) !== null) {
-      imageUrls.push('https:' + decodeEntities(match[1]));
+      imageUrls.push(xhsMediaNode('https:' + decodeEntities(match[1])));
     }
 
     var videoUrls = []
     var regexVideo = /<video\s+class="[^"]*\b-size-image\b[^"]*"\s+[^>]*src="([^"]*)"/i;
     var matchVideo = regexVideo.exec(html);
     if (matchVideo && matchVideo.length >= 2) {
-      videoUrls.push(decodeEntities(matchVideo[1]));
+      videoUrls.push(xhsMediaNode(decodeEntities(matchVideo[1])));
     }
 
     var description = '';
@@ -60,7 +60,7 @@ function xhslink_process(data){
     var coverRegex = /<meta name="og:image" content="(.*?)">/;
     var coverMatch = html.match(coverRegex);
     if (coverMatch  && coverMatch.length >= 2) {
-      cover = decodeEntities(coverMatch[1]);
+      cover = xhsMediaNode(decodeEntities(coverMatch[1]));
     }
 
     var result = {
@@ -76,6 +76,15 @@ function xhslink_process(data){
         resolve(JSON.stringify(result));
     });
 }
+
+
+
+function xhsMediaNode(url) {
+    return {
+        "url": url,
+    }
+}
+
 
 function decodeEntities(encodedString) {
     var translate_re = /&(nbsp|amp|quot|lt|gt);/g;

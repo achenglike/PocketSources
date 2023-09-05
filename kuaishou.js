@@ -16,7 +16,7 @@ function kuaishou_process(data){
     var coverMatch = html.match(coverRegex);
     if (coverMatch && coverMatch.length >= 2) {
         cover = coverMatch[1];
-        cover = cover.replace(/&amp;/g, '&');
+        cover = ksMediaNode(cover.replace(/&amp;/g, '&'));
     }
 
     // extract video url from video which has class="player-video"
@@ -24,7 +24,7 @@ function kuaishou_process(data){
     var videoRegex = /<video[^>]+class="[^"]*player-video[^"]*"[^>]*src="([^"]+)"/i;
     var videoMatch = html.match(videoRegex);
     if (videoMatch && videoMatch.length >= 2) {
-        videoUrls.push(videoMatch[1]);
+        videoUrls.push(ksMediaNode(videoMatch[1]));
     }
 
     if (videoUrls.length == 0) {
@@ -43,6 +43,12 @@ function kuaishou_process(data){
     return new Promise( (resolve, reject) => {
         resolve(JSON.stringify(result));
     });
+}
+
+function ksMediaNode(url) {
+    return {
+        "url": url,
+    }
 }
 
 function decodeEntities(encodedString) {

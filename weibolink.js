@@ -28,7 +28,7 @@ function weibo_process(data){
     var picsMatch = regexImg.exec(html);
     if (picsMatch && picsMatch.length >= 2) {
         var pics = JSON.parse(picsMatch[1]);
-        imageUrls = pics.map((e) => e.large.url);
+        imageUrls = wbMediaNode(pics.map((e) => e.large.url));
     }
 
     // regex take cover
@@ -36,7 +36,7 @@ function weibo_process(data){
     var regexCover = /"page_pic":([\s\S]*?})/gi;
     var coverMatch = regexCover.exec(html);
     if (coverMatch && coverMatch.length >= 2) {
-        cover = JSON.parse(coverMatch[1]).url;
+        cover = wbMediaNode(JSON.parse(coverMatch[1]).url);
     }
 
 
@@ -45,7 +45,7 @@ function weibo_process(data){
     var regexVideo = /"stream_url_hd": "(.+)",/i;
     var matchVideo = regexVideo.exec(html);
     if (matchVideo && matchVideo.length >= 2) {
-       videoUrls.push(matchVideo[1]);
+       videoUrls.push(wbMediaNode(matchVideo[1]));
     }
 
     var result = {
@@ -60,4 +60,11 @@ function weibo_process(data){
     return new Promise( (resolve, reject) => {
         resolve(JSON.stringify(result));
     });
+}
+
+
+function wbMediaNode(url) {
+    return {
+        "url": url,
+    }
 }
