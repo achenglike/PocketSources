@@ -25,7 +25,7 @@ function dylink_process(data){
     var match;
 
     while ((match = regexImg.exec(html)) !== null) {
-      imageUrls.push(createMediaNode(decodeEntities(match[1]));
+      imageUrls.push(createMediaNode(decodeEntities(match[1])));
     }
 
     console.log("domain before :" + redirectUrl);
