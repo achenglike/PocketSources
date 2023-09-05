@@ -41,7 +41,7 @@ function dylink_process(data){
     var regexVideo = /<div class="video-container">\s*<video.*?src="(.*?)"/i;
     var matchVideo = regexVideo.exec(html);
     if (matchVideo && matchVideo.length >= 2) {
-       videoUrls.push(createMediaNode(domain + decodeEntities(matchVideo[1])));
+       videoUrls.push(dyVideoNode(domain + decodeEntities(matchVideo[1])));
     }
     console.log("videoUrls: " + videoUrls);
 
@@ -67,12 +67,25 @@ function dylink_process(data){
     });
 }
 
+function dyVideoNode(url) {
+    return {
+        "url": url,
+        "headers": {
+            "accept": "*/*",
+            "accept-encoding": "identity;q=1, *;q=0",
+            "accept-language": "zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7,zh-TW;q=0.6,de;q=0.5,fr;q=0.4,ca;q=0.3,ga;q=0.2",
+            "sec-fetch-dest": "video",
+            "sec-fetch-mode": "no-cors",
+            "sec-fetch-site": "cross-sit"
+        }
+    }
+}
+
 function createMediaNode(url) {
     return {
         "url": url
     }
 }
-
 function decodeEntities(encodedString) {
     var translate_re = /&(nbsp|amp|quot|lt|gt);/g;
     var translate = {
