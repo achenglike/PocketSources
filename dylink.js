@@ -25,7 +25,7 @@ function dylink_process(data){
     var match;
 
     while ((match = regexImg.exec(html)) !== null) {
-      imageUrls.push(decodeEntities(match[1]));
+      imageUrls.push(createMediaNode(decodeEntities(match[1]));
     }
 
     console.log("domain before :" + redirectUrl);
@@ -41,16 +41,17 @@ function dylink_process(data){
     var regexVideo = /<div class="video-container">\s*<video.*?src="(.*?)"/i;
     var matchVideo = regexVideo.exec(html);
     if (matchVideo && matchVideo.length >= 2) {
-       videoUrls.push(domain + decodeEntities(matchVideo[1]));
+       videoUrls.push(createMediaNode(domain + decodeEntities(matchVideo[1])));
     }
     console.log("videoUrls: " + videoUrls);
 
     var cover = '';
-    var coverRegex = /<img[^>]*src="([^"]*)"[^>]*class="poster"/gi;
-    var coverMatch = coverRegex.exec(html);
-    if (coverMatch && coverMatch.length >= 2) {
-      cover = coverMatch[1];
+    var coverRegex = /<img[^>]*src="([^"]*)"[^>]*class="poster"/;
+    var coverMatch = html.match(coverRegex);
+    if (coverMatch  && coverMatch.length >= 2) {
+      cover = createMediaNode(decodeEntities(coverMatch[1]));
     }
+    console.log("cover: " + cover);
 
     var result = {
         title: title,
@@ -64,6 +65,12 @@ function dylink_process(data){
     return new Promise( (resolve, reject) => {
         resolve(JSON.stringify(result));
     });
+}
+
+function createMediaNode(url) {
+    return {
+        "url": url
+    }
 }
 
 function decodeEntities(encodedString) {
