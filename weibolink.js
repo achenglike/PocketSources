@@ -1,5 +1,6 @@
-function weibo_process(data){
-    console.log(data);
+async function weibo_process(input){
+    var data = await sendMessage('browserHtml', JSON.stringify(input));
+    data = JSON.parse(data);
     // url, redirect_url, title, html
     var title = data.title;
     var html = data.html;
@@ -50,6 +51,7 @@ function weibo_process(data){
 
     var result = {
         title: title,
+        redirectUrl: data.redirect_url,
         description: description,
         richText: false,
         cover: cover,
@@ -57,9 +59,7 @@ function weibo_process(data){
         videos: videoUrls,
         files: [],
     }
-    return new Promise( (resolve, reject) => {
-        resolve(JSON.stringify(result));
-    });
+    return JSON.stringify(result);
 }
 
 

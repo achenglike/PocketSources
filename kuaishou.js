@@ -1,4 +1,6 @@
-function kuaishou_process(data){
+async function kuaishou_process(input){
+    var data = await sendMessage('browserHtml', JSON.stringify(input));
+    data = JSON.parse(data);
     // url, redirect_url, title, html
     var html = data.html;
 
@@ -8,6 +10,18 @@ function kuaishou_process(data){
 
     if (titleMatch && titleMatch.length >= 2) {
       title = titleMatch[1];
+    }
+
+    // regex take description
+    var regexDesc = /<span[^>]*class="txt topic"[^>]*>(.*?)<\/span>/g;
+    var descMatch = regexDesc.exec(html);
+    var description = '';
+    if (descMatch) {
+        for (var i = 0; i < descMatch.length; i++) {
+            var match = descMatch[i];
+            var text = match.replace(/<[^>]+>/g, ''); // 去除 HTML 标签，只保留文字内容
+            description += (' ' + text)
+        }
     }
 
     // extract image cover url
@@ -33,16 +47,15 @@ function kuaishou_process(data){
 
     var result = {
         title: title,
-        description: '',
+        redirectUrl: data.redirect_url,
+        description: description,
         richText: false,
         cover: cover,
         imgs: [],
         videos: videoUrls,
         files: [],
     }
-    return new Promise( (resolve, reject) => {
-        resolve(JSON.stringify(result));
-    });
+    return JSON.stringify(result);
 }
 
 function ksMediaNode(url) {

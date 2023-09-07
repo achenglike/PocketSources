@@ -1,4 +1,6 @@
-function xhslink_process(data){
+async function xhslink_process(input){
+    var data = await sendMessage('browserHtml', JSON.stringify(input));
+    data = JSON.parse(data);
     // url, redirect_url, title, html
     var html = data.html;
     var patternJson = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/;
@@ -65,6 +67,7 @@ function xhslink_process(data){
 
     var result = {
         title: jsonObject.name,
+        redirectUrl: data.redirect_url,
         description: description,
         richText: false,
         cover: cover,
@@ -72,9 +75,7 @@ function xhslink_process(data){
         videos: videoUrls,
         files: [],
     }
-    return new Promise( (resolve, reject) => {
-        resolve(JSON.stringify(result));
-    });
+    return JSON.stringify(result);
 }
 
 
@@ -82,6 +83,10 @@ function xhslink_process(data){
 function xhsMediaNode(url) {
     return {
         "url": url,
+        "headers": {
+            "referer": "https://www.xiaohongshu.com/"
+        }
+        
     }
 }
 
