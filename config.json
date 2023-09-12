@@ -35,6 +35,15 @@
 			"entryMethod": "weibo_process",
 			"updateTime": "2023-07-27T20:39:03Z",
 			"versionCode": 1
+		},
+		{	"id": "bilibili",
+			"name": "B站",
+			"description": "解析B站内容,需提供Cookie信息",
+			"triggerRegex": "https?://b23\\.tv/[A-Za-z0-9]+",
+			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/bilibililink.js",
+			"entryMethod": "bilibili_process",
+			"updateTime": "2023-07-27T20:39:03Z",
+			"versionCode": 1,
 		}
 	]
 }
