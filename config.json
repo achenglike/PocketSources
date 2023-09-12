@@ -43,7 +43,7 @@
 			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/bilibililink.js",
 			"entryMethod": "bilibili_process",
 			"updateTime": "2023-07-27T20:39:03Z",
-			"versionCode": 1,
+			"versionCode": 1
 		}
 	]
 }
