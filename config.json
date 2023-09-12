@@ -38,7 +38,7 @@
 		},
 		{	"id": "bilibili",
 			"name": "B站",
-			"description": "解析B站内容,需提供Cookie信息",
+			"description": "解析B站内容",
 			"triggerRegex": "https?://b23\\.tv/[A-Za-z0-9]+",
 			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/bilibililink.js",
 			"entryMethod": "bilibili_process",
