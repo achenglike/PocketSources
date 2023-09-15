@@ -5,10 +5,10 @@ async function inslink_process(input){
     var postDataStr = data.xhr.filter(function(item){return item.url == '/api/graphql'})[0].responseBody;
     var postData = JSON.parse(postDataStr).data.xdt_shortcode_media;
 
-    var cover = postData.thumbnail_src;
+    var cover = insMediaNode(postData.thumbnail_src);
     var title = postData.owner.full_name + ' ins(@'+ postData.owner.username +')';
 
-    var imageUrls = postData.edge_sidecar_to_children.edges.map(function(item){ return item.node.display_url });
+    var imageUrls = postData.edge_sidecar_to_children.edges.map(function(item){ return insMediaNode(item.node.display_url) });
     var videoUrls = [];
 
 
@@ -23,4 +23,10 @@ async function inslink_process(input){
         files: [],
     }
     return JSON.stringify(result);
+}
+
+function insMediaNode(url) {
+    return {
+        "url": url,
+    }
 }
