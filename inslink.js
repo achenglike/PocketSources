@@ -17,12 +17,19 @@ async function inslink_process(input){
     var imageUrls = [];
     var videoUrls = [];
     if (postData.is_video) {
-        videoUrls.push(postData.video_url);
+        videoUrls.push(insMediaNode(postData.video_url));
     } else {
         if (postData.edge_sidecar_to_children) {
-            imageUrls = postData.edge_sidecar_to_children.edges.map(function(item){ return insMediaNode(item.node.display_url) });
+            imageUrls = postData.edge_sidecar_to_children.edges.map(function(item){ 
+                if (item.node.is_video) {
+                    return insMediaNode(item.node.video_url);
+                } else {
+                    var imgResources = item.node.display_resources;
+                    return insMediaNode(imgResources[imgResources.length - 1].src);
+                }
+            });
         } else {
-            imageUrls.push(postData.display_resources[postData.display_resources.length - 1].src);
+            imageUrls.push(insMediaNode(postData.display_resources[postData.display_resources.length - 1].src));
         }
 
     }
