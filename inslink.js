@@ -6,11 +6,26 @@ async function inslink_process(input){
     var postData = JSON.parse(postDataStr).data.xdt_shortcode_media;
 
     var cover = insMediaNode(postData.thumbnail_src);
-    var title = postData.owner.full_name + ' ins(@'+ postData.owner.username +')';
+    var title = '';
+    if (postData.edge_media_to_caption && postData.edge_media_to_caption.edges.length > 0) {
+        title =  postData.edge_media_to_caption.edges[0].node.text;
+    }
+    if (!title) {
+        title = postData.owner.full_name + ' ins(@'+ postData.owner.username +')';
+    }
 
-    var imageUrls = postData.edge_sidecar_to_children.edges.map(function(item){ return insMediaNode(item.node.display_url) });
+    var imageUrls = [];
     var videoUrls = [];
+    if (postData.is_video) {
+        videoUrls.push(postData.video_url);
+    } else {
+        if (postData.edge_sidecar_to_children) {
+            imageUrls = postData.edge_sidecar_to_children.edges.map(function(item){ return insMediaNode(item.node.display_url) });
+        } else {
+            imageUrls.push(postData.display_resources[postData.display_resources.length - 1].src);
+        }
 
+    }
 
     var result = {
         title: title,
