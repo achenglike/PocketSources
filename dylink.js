@@ -20,13 +20,14 @@ async function dylink_process(input){
         description = descMatch[1];
     }
 
+    var medias = [];
+
     // regex take image urls
     var regexImg = /<div\s+class="gallery-container[^"]*">[\s\S]*?<img\s+src="(.*?)"/gi;
-    var imageUrls = [];
     var match;
 
     while ((match = regexImg.exec(html)) !== null) {
-      imageUrls.push(createMediaNode(decodeEntities(match[1])));
+        medias.push(createMediaNode(decodeEntities(match[1])));
     }
 
     console.log("domain before :" + redirectUrl);
@@ -38,13 +39,11 @@ async function dylink_process(input){
         domain = domainMatch[1];
     }
     // regex take video url
-    var videoUrls = [];
     var regexVideo = /<div class="video-container">\s*<video.*?src="(.*?)"/i;
     var matchVideo = regexVideo.exec(html);
     if (matchVideo && matchVideo.length >= 2) {
-       videoUrls.push(dyVideoNode(domain + decodeEntities(matchVideo[1])));
+        medias.push(dyVideoNode(domain + decodeEntities(matchVideo[1])));
     }
-    console.log("videoUrls: " + videoUrls);
 
     var cover = '';
     var coverRegex = /<img[^>]*src="([^"]*)"[^>]*class="poster"/;
@@ -60,9 +59,7 @@ async function dylink_process(input){
         description: description,
         richText: false,
         cover: cover,
-        imgs: imageUrls,
-        videos: videoUrls,
-        files: [],
+        medias: medias,
     }
     return JSON.stringify(result);
 }
@@ -70,6 +67,7 @@ async function dylink_process(input){
 function dyVideoNode(url) {
     return {
         "url": url,
+        "contentMainType": "video",
         "headers": {
             "accept": "*/*",
             "accept-encoding": "identity;q=1, *;q=0",
@@ -83,7 +81,8 @@ function dyVideoNode(url) {
 
 function createMediaNode(url) {
     return {
-        "url": url
+        "url": url,
+        "contentMainType": "image"
     }
 }
 function decodeEntities(encodedString) {

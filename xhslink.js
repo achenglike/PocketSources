@@ -35,20 +35,19 @@ async function xhslink_process(input){
             contents.push(descMatch[3]);
         }
     }
+  
+    var medias = [];
 
     var regexImg = /<img class="[^"]*\b-size-image\b[^"]*"\s+[^>]*src="(.*?)"/g;
-    var imageUrls = [];
     var match;
-
     while ((match = regexImg.exec(html)) !== null) {
-      imageUrls.push(xhsMediaNode('https:' + decodeEntities(match[1])));
+      medias.push(xhsMediaNode('https:' + decodeEntities(match[1]), 'image'));
     }
 
-    var videoUrls = []
     var regexVideo = /<video\s+class="[^"]*\b-size-image\b[^"]*"\s+[^>]*src="([^"]*)"/i;
     var matchVideo = regexVideo.exec(html);
     if (matchVideo && matchVideo.length >= 2) {
-      videoUrls.push(xhsMediaNode(decodeEntities(matchVideo[1])));
+      medias.push(xhsMediaNode(decodeEntities(matchVideo[1]), 'video'));
     }
 
     var description = '';
@@ -62,7 +61,7 @@ async function xhslink_process(input){
     var coverRegex = /<meta name="og:image" content="(.*?)">/;
     var coverMatch = html.match(coverRegex);
     if (coverMatch  && coverMatch.length >= 2) {
-      cover = xhsMediaNode(decodeEntities(coverMatch[1]));
+      cover = xhsMediaNode(decodeEntities(coverMatch[1]), 'image');
     }
 
     var result = {
@@ -71,18 +70,17 @@ async function xhslink_process(input){
         description: description,
         richText: false,
         cover: cover,
-        imgs: imageUrls,
-        videos: videoUrls,
-        files: [],
+        medias: medias,
     }
     return JSON.stringify(result);
 }
 
 
 
-function xhsMediaNode(url) {
+function xhsMediaNode(url, contentMainType) {
     return {
-        "url": url,
+      "url": url,
+      "contentMainType": contentMainType,
         "headers": {
             "referer": "https://www.xiaohongshu.com/"
         }

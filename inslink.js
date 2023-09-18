@@ -5,7 +5,7 @@ async function inslink_process(input){
     var postDataStr = data.xhr.filter(function(item){return item.url == '/api/graphql'})[0].responseBody;
     var postData = JSON.parse(postDataStr).data.xdt_shortcode_media;
 
-    var cover = insMediaNode(postData.thumbnail_src);
+    var cover = insMediaNode(postData.thumbnail_src, 'image');
     var title = '';
     if (postData.edge_media_to_caption && postData.edge_media_to_caption.edges.length > 0) {
         title =  postData.edge_media_to_caption.edges[0].node.text;
@@ -14,22 +14,21 @@ async function inslink_process(input){
         title = postData.owner.full_name + ' ins(@'+ postData.owner.username +')';
     }
 
-    var imageUrls = [];
-    var videoUrls = [];
+    var medias = [];
     if (postData.is_video) {
-        videoUrls.push(insMediaNode(postData.video_url));
+        medias.push(insMediaNode(postData.video_url, 'video'));
     } else {
         if (postData.edge_sidecar_to_children) {
-            imageUrls = postData.edge_sidecar_to_children.edges.map(function(item){ 
+            medias = postData.edge_sidecar_to_children.edges.map(function(item){ 
                 if (item.node.is_video) {
-                    return insMediaNode(item.node.video_url);
+                    return insMediaNode(item.node.video_url, 'video');
                 } else {
                     var imgResources = item.node.display_resources;
-                    return insMediaNode(imgResources[imgResources.length - 1].src);
+                    return insMediaNode(imgResources[imgResources.length - 1].src, 'image');
                 }
             });
         } else {
-            imageUrls.push(insMediaNode(postData.display_resources[postData.display_resources.length - 1].src));
+            medias.push(insMediaNode(postData.display_resources[postData.display_resources.length - 1].src));
         }
 
     }
@@ -40,15 +39,14 @@ async function inslink_process(input){
         description: title,
         richText: false,
         cover: cover,
-        imgs: imageUrls,
-        videos: videoUrls,
-        files: [],
+        medias: medias,
     }
     return JSON.stringify(result);
 }
 
-function insMediaNode(url) {
+function insMediaNode(url, contentMainType) {
     return {
         "url": url,
+        "contentMainType": contentMainType
     }
 }

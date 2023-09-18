@@ -30,18 +30,15 @@ async function kuaishou_process(input){
     var coverMatch = html.match(coverRegex);
     if (coverMatch && coverMatch.length >= 2) {
         cover = coverMatch[1];
-        cover = ksMediaNode(cover.replace(/&amp;/g, '&'));
+        cover = ksMediaNode(cover.replace(/&amp;/g, '&'), 'image');
     }
 
     // extract video url from video which has class="player-video"
-    var videoUrls = [];
     var videoRegex = /<video[^>]+class="[^"]*player-video[^"]*"[^>]*src="([^"]+)"/i;
     var videoMatch = html.match(videoRegex);
     if (videoMatch && videoMatch.length >= 2) {
-        videoUrls.push(ksMediaNode(videoMatch[1]));
-    }
-
-    if (videoUrls.length == 0) {
+        medias.push(ksMediaNode(videoMatch[1], 'video'));
+    } else { 
         title = "快手图片提取未实现"
     }
 
@@ -51,16 +48,15 @@ async function kuaishou_process(input){
         description: description,
         richText: false,
         cover: cover,
-        imgs: [],
-        videos: videoUrls,
-        files: [],
+        medias: medias,
     }
     return JSON.stringify(result);
 }
 
-function ksMediaNode(url) {
+function ksMediaNode(url, contentMainType ) {
     return {
         "url": url,
+        "contentMainType": contentMainType,
     }
 }
 

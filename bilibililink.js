@@ -28,39 +28,31 @@ async function bilibili_process(input){
         typeStr = typeMatch[1];
     }
 
-    var imageUrls = [];
-    var videoUrls = [];
+    var medias = []
 
     if (typeStr == 'video') {
         // regex take video url
         var regexVideo = /readyVideoUrl":"([^"]+)"/i;
         var matchVideo = regexVideo.exec(html);
         if (matchVideo && matchVideo.length >= 2) {
-            videoUrls.push(createMediaNode(matchVideo[1]));
+            medias.push(createMediaNode(matchVideo[1], 'video'));
         }
-        console.log("videoUrls: " + videoUrls);
 
     } else if (typeStr == 'image') {
         // regex take image urls
         var regexImg = /<meta[^>]*property="og:image" content="(.*?)">/gi;
         var match;
         while ((match = regexImg.exec(html)) !== null) {
-            imageUrls.push(createMediaNode(decodeEntities(match[1])));
+            medias.push(createMediaNode(decodeEntities(match[1]), 'image'));
         }
     }
-
-
-
-
-
 
     var cover = '';
     var coverRegex = /<meta[^>]*property="og:image" content="(.*?)">/;
     var coverMatch = html.match(coverRegex);
     if (coverMatch  && coverMatch.length >= 2) {
-      cover = createMediaNode(decodeEntities(coverMatch[1]));
+      cover = createMediaNode(decodeEntities(coverMatch[1]), 'image');
     }
-    console.log("cover: " + cover);
 
     var result = {
         title: title,
@@ -68,16 +60,15 @@ async function bilibili_process(input){
         description: description,
         richText: false,
         cover: cover,
-        imgs: imageUrls,
-        videos: videoUrls,
-        files: [],
+        medias: medias,
     }
     return JSON.stringify(result);
 }
 
-function createMediaNode(url) {
+function createMediaNode(url, contentMainType ) {
     return {
-        "url": url
+        "url": url,
+        "contentMainType": contentMainType,
     }
 }
 function decodeEntities(encodedString) {
