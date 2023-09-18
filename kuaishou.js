@@ -33,6 +33,7 @@ async function kuaishou_process(input){
         cover = ksMediaNode(cover.replace(/&amp;/g, '&'), 'image');
     }
 
+    var medias = [];
     // extract video url from video which has class="player-video"
     var videoRegex = /<video[^>]+class="[^"]*player-video[^"]*"[^>]*src="([^"]+)"/i;
     var videoMatch = html.match(videoRegex);
