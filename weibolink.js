@@ -42,7 +42,7 @@ async function weibo_process(input){
 
 
     // regex take video url
-    var regexVideo = /"stream_url_hd": "(.+)",/i;
+    var regexVideo = /"stream_url_hd": "(.+)"/i;
     var matchVideo = regexVideo.exec(html);
     if (matchVideo && matchVideo.length >= 2) {
         medias.push(wbMediaNode(matchVideo[1], 'video'));
