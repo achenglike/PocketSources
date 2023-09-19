@@ -13,7 +13,7 @@ async function pornhub_process(input){
     if (jsonMatch && jsonMatch.length >= 2) {
         var jsonData = JSON.parse(jsonMatch[1]);
         title = jsonData.video_title;
-        cover = jsonData.image_url;
+        cover = coverNode(jsonData.image_url);
 
         var hlsLine = jsonData.mediaDefinitions.find(function(item) { return item.format == 'hls' && item.quality =='1080' }).videoUrl;
         medias.push(mediaNode(hlsLine));
@@ -30,6 +30,13 @@ async function pornhub_process(input){
     return JSON.stringify(result);
 }
 
+
+function coverNode(url) {
+    return {
+        "url": url,
+        "contentMainType": 'image',
+    }
+}
 
 function mediaNode(url) {
     return {
