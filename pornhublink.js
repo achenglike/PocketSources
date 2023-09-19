@@ -22,7 +22,7 @@ async function pornhub_process(input){
             }
         }
 
-        var response = await fetch(mp4UrlGet);
+        var response = await fetch(mp4UrlGet, options);
         var body = await response.json();
         var mp4url = body.find(function(item) { return item.quality == '1080' }).videoUrl;
         medias.push(mediaNode(mp4url, data.cookies));
