@@ -1,7 +1,7 @@
 async function pornhub_process(input){
     var data = await sendMessage('browserHtml', JSON.stringify(input));
     data = JSON.parse(data);
-    // url, redirect_url, title, html, xhr, cookies
+    // url, redirect_url, title, html, xhr
     var title = data.title;
     var html = data.html;
     var redirectUrl = data.redirect_url;
@@ -15,18 +15,8 @@ async function pornhub_process(input){
         title = jsonData.video_title;
         cover = jsonData.image_url;
 
-        var mp4UrlGet = jsonData.mediaDefinitions.find(function(item) { return item.format == 'mp4' }).videoUrl;
-        var options = {
-            headers: {
-                Cookie: data.cookies
-            }
-        }
-
-        var response = await fetch(mp4UrlGet, options);
-        var body = await response.json();
-        var mp4url = body.find(function(item) { return item.quality == '1080' }).videoUrl;
-        medias.push(mediaNode(mp4url, data.cookies));
-
+        var hlsLine = jsonData.mediaDefinitions.find(function(item) { return item.format == 'hls' && item.quality =='1080' }).videoUrl;
+        medias.push(mediaNode(hlsLine));
     }
 
     var result = {
@@ -41,12 +31,9 @@ async function pornhub_process(input){
 }
 
 
-function mediaNode(url, cookies) {
+function mediaNode(url) {
     return {
         "url": url,
         "contentMainType": 'video',
-        "headers": {
-            "Cookie": cookies
-        }
     }
 }
