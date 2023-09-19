@@ -53,6 +53,15 @@
 			"entryMethod": "inslink_process",
 			"updateTime": "2023-09-15T17:41:03Z",
 			"versionCode": 1
+		},
+		{	"id": "pornhub",
+			"name": "pornhub",
+			"description": "parse pornhub video",
+			"triggerRegex": "https?://[\\S]+\\.pornhub\\.com/view_video.php\\?viewkey=[A-Za-z0-9]+",
+			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/pornhublink.js",
+			"entryMethod": "pornhub_process",
+			"updateTime": "2023-09-19T10:51:03Z",
+			"versionCode": 1
 		}
 	]
 }
