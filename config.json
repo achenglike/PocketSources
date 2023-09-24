@@ -65,7 +65,7 @@
 		},
 		{	"id": "x",
 			"name": "x",
-			"description": "parse x tweet",
+			"description": "parse x tweet, login your tweet account in InApp Browser first",
 			"triggerRegex": "https?://twitter\\.com/[\\S]+/status/\\d+",
 			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/xlink.js",
 			"entryMethod": "xlink_process",
