@@ -62,6 +62,15 @@
 			"entryMethod": "pornhub_process",
 			"updateTime": "2023-09-19T10:51:03Z",
 			"versionCode": 1
+		},
+		{	"id": "x",
+			"name": "x",
+			"description": "parse x tweet",
+			"triggerRegex": "https?://twitter\\.com/[\\S]+/status/\\d+",
+			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/xlink.js",
+			"entryMethod": "xlink_process",
+			"updateTime": "2023-09-24T16:11:03Z",
+			"versionCode": 1
 		}
 	]
 }
