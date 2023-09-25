@@ -16,6 +16,9 @@ async function xlink_process(input){
     var postMedias = postData.entities.media;
     var medias = postMedias.map(function(item) {
         if (item.type == 'video') {
+            if (cover == '') {
+                cover = item.media_url_https;
+            }
             return insMediaNode(item.video_info.variants.find(function(elem){ return elem.content_type == 'video/mp4' }).url, 'video');
         } else {
             return insMediaNode(item.media_url_https, 'image');
