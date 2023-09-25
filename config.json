@@ -36,6 +36,15 @@
 			"updateTime": "2023-07-27T20:39:03Z",
 			"versionCode": 1
 		},
+		{	"id": "weibovideo",
+			"name": "微博视频流",
+			"description": "解析微博视频流内容",
+			"triggerRegex": "https?://video\\.weibo\\.com/show\\?fid=[\\d:]+",
+			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/weibovideolink.js",
+			"entryMethod": "weibovideo_process",
+			"updateTime": "2023-09-25T14:45:03Z",
+			"versionCode": 1
+		},
 		{	"id": "bilibili",
 			"name": "B站",
 			"description": "解析B站内容",
