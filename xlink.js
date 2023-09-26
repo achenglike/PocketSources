@@ -17,7 +17,7 @@ async function xlink_process(input){
     var medias = postMedias.map(function(item) {
         if (item.type == 'video') {
             if (cover == '') {
-                cover = item.media_url_https;
+                cover = insMediaNode(item.media_url_https, 'image');
             }
             return insMediaNode(item.video_info.variants.find(function(elem){ return elem.content_type == 'video/mp4' }).url, 'video');
         } else {
@@ -30,7 +30,7 @@ async function xlink_process(input){
         redirectUrl: data.redirect_url,
         description: description,
         richText: false,
-        cover: null,
+        cover: cover,
         medias: medias,
     }
     return JSON.stringify(result);
