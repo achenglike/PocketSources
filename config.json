@@ -86,7 +86,7 @@
 			"description": "parse youtube video",
 			"triggerRegex": "https?://youtu\\.be/[A-Za-z0-9]+",
 			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/youtube.js",
-			"entryMethod": "xlink_process",
+			"entryMethod": "youtube_process",
 			"updateTime": "2023-10-07T08:16:19Z",
 			"versionCode": 1
 		}
