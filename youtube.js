@@ -1,5 +1,5 @@
 async function youtube_process(input){
-    var data = await sendMessage('browserHtml', JSON.stringify(input) + '&bpctr=9999999999&has_verified=1');
+    var data = await sendMessage('browserHtml', JSON.stringify(input + '&bpctr=9999999999&has_verified=1'));
     data = JSON.parse(data);
     // url, redirect_url, title, html
     var title = data.title;
