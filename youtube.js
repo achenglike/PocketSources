@@ -60,7 +60,7 @@ function signatureToUrl(signatureCipher) {
     var valueUrl = values.url;
     var valuesS = values.s;
     var sigKey = values.sp || 'signature';
-    var sig = aE(valuesS);
+    var sig = cE(valuesS);
     return decodeURIComponent(valueUrl) + '&' + sigKey + '=' + sig;
 }
 
@@ -92,17 +92,28 @@ function urlDecode(querys) {
     return result;
 }
 
-aE = function(a) { a = a.split("");
-        $D.lW(a, 49);
-        $D.Lh(a, 38);
-        $D.lW(a, 61);
-        $D.Lh(a, 45);
-        $D.lW(a, 20);
-        $D.qS(a, 2); return a.join("") };
-var $D = {
-        qS: function(a, b) { a.splice(0, b) },
-        Lh: function(a, b) { var c = a[0];
+    cE = function(a) {
+        a = a.split("");
+        bE.rS(a, 31);
+        bE.sw(a, 23);
+        bE.i2(a, 3);
+        bE.rS(a, 61);
+        bE.i2(a, 2);
+        bE.rS(a, 2);
+        bE.sw(a, 23);
+        bE.i2(a, 3);
+        return a.join("")
+    }
+    var bE = {
+        sw: function(a, b) {
+            var c = a[0];
             a[0] = a[b % a.length];
-            a[b % a.length] = c },
-        lW: function(a) { a.reverse() }
+            a[b % a.length] = c
+        },
+        i2: function(a, b) {
+            a.splice(0, b)
+        },
+        rS: function(a) {
+            a.reverse()
+        }
     };
