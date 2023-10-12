@@ -19,7 +19,7 @@ async function kuaishou_process(input){
     if (descMatch) {
         for (var i = 0; i < descMatch.length; i++) {
             var match = descMatch[i];
-            var text = match.replace(/<[^>]+>/g, ''); // 去除 HTML 标签，只保留文字内容
+            var text = match.replace(/<[^>]+>/g, '');
             description += (' ' + text)
         }
     }
