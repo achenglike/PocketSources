@@ -1,5 +1,5 @@
 async function youtube_process(input){
-    var data = await sendMessage('browserHtml', JSON.stringify(input));
+    var data = await sendMessage('browserHtml', JSON.stringify(input) + '&bpctr=9999999999&has_verified=1');
     data = JSON.parse(data);
     // url, redirect_url, title, html
     var title = data.title;
@@ -32,17 +32,16 @@ async function youtube_process(input){
     var bestVideo = formats.filter(v => v.qualityLabel != undefined && v.mimeType.indexOf('mp4') >= 0).sort((a,b) => parseInt(b.qualityLabel)-parseInt(a.qualityLabel))[0];
     var videoUrl = bestVideo.url;
     if (!videoUrl) {
-        // parse sig url
-        var values = urlDecode(bestVideo.signatureCipher);
-        var valueUrl = values.url;
-        var valuesS = values.s;
-        var sigKey = values.sp || 'signature';
-        var sig = aE(valuesS);
-        videoUrl = decodeURIComponent(valueUrl) + '&' + sigKey + '=' + sig;
+        videoUrl = signatureToUrl(bestVideo.signatureCipher);
+    }
+    var bestAudio = formats.filter(v => v.mimeType.indexOf('audio/mp4') >= 0).sort((a,b) => parseInt(b.audioSampleRate)-parseInt(a.audioSampleRate))[0];
+    var audioUrl = bestAudio.url;
+    if (!audioUrl) {
+        audioUrl = signatureToUrl(bestAudio.signatureCipher);
     }
 
 
-    medias.push(mediaNode(videoUrl, 'video'));
+    medias.push(videoNode(videoUrl, audioUrl));
 
     var result = {
         title: title,
@@ -55,11 +54,29 @@ async function youtube_process(input){
     return JSON.stringify(result);
 }
 
+function signatureToUrl(signatureCipher) {
+    // parse sig url
+    var values = urlDecode(signatureCipher);
+    var valueUrl = values.url;
+    var valuesS = values.s;
+    var sigKey = values.sp || 'signature';
+    var sig = aE(valuesS);
+    return decodeURIComponent(valueUrl) + '&' + sigKey + '=' + sig;
+}
+
 
 function mediaNode(url, contentMainType) {
     return {
         "url": url,
         "contentMainType": contentMainType,
+    }
+}
+
+function videoNode(url, audioUrl) {
+    return {
+        "url": url,
+        "contentMainType": "video",
+        "ext": {"videoType": "videoAudio", "audioUrl": audioUrl}
     }
 }
 

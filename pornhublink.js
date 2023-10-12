@@ -42,5 +42,6 @@ function mediaNode(url) {
     return {
         "url": url,
         "contentMainType": 'video',
+        "ext": {"videoType": "hls"}
     }
 }
