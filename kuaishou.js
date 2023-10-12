@@ -39,8 +39,24 @@ async function kuaishou_process(input){
     var videoMatch = html.match(videoRegex);
     if (videoMatch && videoMatch.length >= 2) {
         medias.push(ksMediaNode(videoMatch[1], 'video'));
-    } else { 
-        title = "快手图片提取未实现"
+    }
+
+    // extract image from class="player-wrapper"
+    var imageWrapperRgex = /player-wrapper(.+)?page-info/i;
+    var imageWrapperMatch = html.match(imageWrapperRgex);
+    if (imageWrapperMatch && imageWrapperMatch.length >= 2) {
+        var imageWrapperHtml = imageWrapperMatch[1];
+        
+        var regexImgItem = /<img[^>]+class="[^"]*image-main[^"]*"[^>]*src="([^"]+)"[^>]*>/gi;
+        var regexImgMatch;
+
+        while ((regexImgMatch = regexImgItem.exec(imageWrapperHtml)) !== null) {
+            var findUrl = regexImgMatch[1];
+            if (findUrl.startsWith('//')) {
+                findUrl = 'https:' + findUrl;
+            }
+            medias.push(ksMediaNode(findUrl, 'image'));
+        }
     }
 
     var result = {
