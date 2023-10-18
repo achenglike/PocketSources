@@ -65,6 +65,12 @@ async function dylink_process(input){
 }
 
 function dyVideoNode(url) {
+    if (url.indexOf("playwm") > 0) {
+        url = url.replace("playwm", "play");
+    }
+    if (url.indexOf("ratio=720p") > 0) {
+        url = url.replace("ratio=720p", "ratio=1080p");
+    }
     return {
         "url": url,
         "contentMainType": "video",
