@@ -43,13 +43,24 @@ async function youtube_process(input){
 
     medias.push(videoNode(videoUrl, audioUrl));
 
+    if (description == '' && medias.length == 0) {
+        return JSON.stringify({
+            code: 404,
+            message: "fetch data fail"
+        });
+    }
+
     var result = {
-        title: title,
-        redirectUrl: data.redirect_url,
-        description: description,
-        richText: false,
-        cover: cover,
-        medias: medias,
+        data: {
+            title: title,
+            redirectUrl: data.redirect_url,
+            description: description,
+            richText: false,
+            cover: cover,
+            medias: medias,
+        },
+        code: 0,
+        message: 'success'
     }
     return JSON.stringify(result);
 }

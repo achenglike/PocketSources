@@ -64,13 +64,24 @@ async function xhslink_process(input){
       cover = xhsMediaNode(decodeEntities(coverMatch[1]), 'image');
     }
 
+    if (description == '' && medias.length == 0) {
+        return JSON.stringify({
+            code: 404,
+            message: "获取内容失败"
+        });
+    }
+
     var result = {
-        title: jsonObject.name,
-        redirectUrl: data.redirect_url,
-        description: description,
-        richText: false,
-        cover: cover,
-        medias: medias,
+        data: {
+            title: jsonObject.name,
+            redirectUrl: data.redirect_url,
+            description: description,
+            richText: false,
+            cover: cover,
+            medias: medias,
+        },
+        code: 0,
+        message: 'success'
     }
     return JSON.stringify(result);
 }

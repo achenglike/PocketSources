@@ -30,7 +30,6 @@ async function dylink_process(input){
         medias.push(createMediaNode(decodeEntities(match[1])));
     }
 
-    console.log("domain before :" + redirectUrl);
     // take domain from redirectUrl
     var domain = '';
     var domainRegex = /(https?:\/\/[^\/]*)/;
@@ -51,15 +50,25 @@ async function dylink_process(input){
     if (coverMatch  && coverMatch.length >= 2) {
       cover = createMediaNode(decodeEntities(coverMatch[1]));
     }
-    console.log("cover: " + cover);
+
+    if (description == '' && medias.length == 0) {
+        return JSON.stringify({
+            code: 404,
+            message: "获取内容失败"
+        });
+    }
 
     var result = {
-        title: title,
-        redirectUrl: data.redirect_url,
-        description: description,
-        richText: false,
-        cover: cover,
-        medias: medias,
+        data: {
+            title: title,
+            redirectUrl: data.redirect_url,
+            description: description,
+            richText: false,
+            cover: cover,
+            medias: medias,
+        },
+        code: 0,
+        message: 'success'
     }
     return JSON.stringify(result);
 }
