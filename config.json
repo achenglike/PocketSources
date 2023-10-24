@@ -45,15 +45,6 @@
 			"updateTime": "2023-07-18T20:39:03Z",
 			"versionCode": 1
 		},
-		{	"id": "douyin",
-			"name": "抖音",
-			"description": "解析抖音内容",
-			"triggerRegex": "https?://v.douyin\\.com/[A-Za-z0-9]+",
-			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/dylink.js",
-			"entryMethod": "dylink_process",
-			"updateTime": "2023-07-17T20:39:03Z",
-			"versionCode": 1
-		},
 		{	"id": "kuiashou",
 			"name": "快手",
 			"description": "解析快手内容",
@@ -88,6 +79,15 @@
 			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/bilibililink.js",
 			"entryMethod": "bilibili_process",
 			"updateTime": "2023-07-27T20:39:03Z",
+			"versionCode": 1
+		},
+		{	"id": "douyin",
+			"name": "抖音",
+			"description": "解析抖音内容",
+			"triggerRegex": "https?://v.douyin\\.com/[A-Za-z0-9]+",
+			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/dylink.js",
+			"entryMethod": "dylink_process",
+			"updateTime": "2023-07-17T20:39:03Z",
 			"versionCode": 1
 		}
 	]
