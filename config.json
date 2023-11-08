@@ -21,10 +21,10 @@
 		{	"id": "x",
 			"name": "x",
 			"description": "parse x tweet, login your tweet account in InApp Browser first",
-			"triggerRegex": "https?://twitter\\.com/[\\S]+/status/\\d+",
+			"triggerRegex": "https?://(twitter|x)\\.com/[\\S]+/status/\\d+",
 			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/xlink.js",
 			"entryMethod": "xlink_process",
-			"updateTime": "2023-09-24T16:11:03Z",
+			"updateTime": "2023-11-08T16:11:03Z",
 			"versionCode": 1
 		},
 		{	"id": "youtube",
