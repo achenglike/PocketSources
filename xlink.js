@@ -5,9 +5,10 @@ async function xlink_process(input){
     var bodyStr = data.xhr.filter(function(item){return item.url.indexOf('TweetDetail') > 0})[0].responseBody;
     var mediaEntries = JSON.parse(bodyStr).data.threaded_conversation_with_injections_v2.instructions[0].entries;
     console.log('sssssssssssssssssssss')
-    console.log(mediaEntries);
+    console.log(mediaEntries.length);
     console.log(mediaEntries[mediaEntries.length-1]);
     console.log(mediaEntries[mediaEntries.length-1].content);
+    console.log(mediaEntries[mediaEntries.length-2].content.itemContent);
     console.log(mediaEntries[mediaEntries.length-1].content.itemContent);
     console.log(mediaEntries[mediaEntries.length-1].content.itemContent.tweet_results);
     console.log('eeeeeeeeeeeeeeeeeeeee')
