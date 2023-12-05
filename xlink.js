@@ -6,6 +6,9 @@ async function xlink_process(input){
     var mediaEntries = JSON.parse(bodyStr).data.threaded_conversation_with_injections_v2.instructions[0].entries;
     console.log('sssssssssssssssssssss')
     console.log(mediaEntries);
+    console.log(mediaEntries[mediaEntries.length-1]);
+    console.log(mediaEntries[mediaEntries.length-1].content);
+    console.log(mediaEntries[mediaEntries.length-1].content.itemContent);
     console.log(mediaEntries[mediaEntries.length-1].content.itemContent.tweet_results);
     console.log('eeeeeeeeeeeeeeeeeeeee')
     var mixData = mediaEntries[mediaEntries.length-1].content.itemContent.tweet_results.result;
