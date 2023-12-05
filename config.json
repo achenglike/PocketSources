@@ -24,7 +24,7 @@
 			"triggerRegex": "https?://(twitter|x)\\.com/[\\S]+/status/\\d+",
 			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/xlink.js",
 			"entryMethod": "xlink_process",
-			"updateTime": "2023-12-03T03:25:03Z",
+			"updateTime": "2023-12-05T03:25:03Z",
 			"versionCode": 2
 		},
 		{	"id": "youtube",
