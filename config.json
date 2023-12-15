@@ -33,7 +33,7 @@
 			"triggerRegex": "https?://youtu\\.be/[A-Za-z0-9]+",
 			"parseAsset": "https://raw.githubusercontent.com/achenglike/PocketSources/main/youtube.js",
 			"entryMethod": "youtube_process",
-			"updateTime": "2023-10-07T08:16:19Z",
+			"updateTime": "2023-12-15T00:16:19Z",
 			"versionCode": 1
 		},
 		{	"id": "xiaohongshu",
